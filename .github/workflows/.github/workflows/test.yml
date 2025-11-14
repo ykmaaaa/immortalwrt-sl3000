@@ -1,0 +1,17 @@
+name: Test Workflow
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main   # 改成你的默认分支
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Print message
+        run: echo "GitHub Actions 已经正常运行！"
