@@ -14,6 +14,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Free disk space
+      run: |
+        echo "清理不必要的文件，释放磁盘空间..."
+        sudo rm -rf /usr/share/dotnet
+        sudo rm -rf /opt/ghc
+        sudo rm -rf /usr/local/lib/android
+        sudo rm -rf /usr/local/share/boost
+        df -h
+
     - name: Install dependencies
       run: |
         sudo apt update
