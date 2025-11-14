@@ -23,6 +23,10 @@ jobs:
         sudo rm -rf /usr/local/share/boost
         df -h
 
+    - name: Clone ImmortalWrt source
+      run: |
+        git clone https://github.com/immortalwrt/immortalwrt.git openwrt
+
     - name: Install dependencies
       run: |
         sudo apt update
@@ -38,23 +42,26 @@ jobs:
 
     - name: Setup feeds
       run: |
+        cd openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
     - name: Load custom config
       run: |
-        cp sl3000.config .config
+        cd openwrt
+        cp ../sl3000.config .config
         make defconfig
 
     - name: Build firmware
       run: |
+        cd openwrt
         make -j$(nproc) V=s
 
     - name: Upload firmware artifacts
       uses: actions/upload-artifact@v4
       with:
         name: SL3000-firmware
-        path: bin/targets/mediatek/filogic/
+        path: openwrt/bin/targets/mediatek/filogic/
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
@@ -64,5 +71,5 @@ jobs:
         draft: false
         prerelease: false
         files: |
-          bin/targets/mediatek/filogic/*.bin
-          bin/targets/mediatek/filogic/*.img
+          openwrt/bin/targets/mediatek/filogic/*.bin
+          openwrt/bin/targets/mediatek/filogic/*.img
