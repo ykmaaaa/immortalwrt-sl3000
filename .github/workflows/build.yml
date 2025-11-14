@@ -48,8 +48,8 @@ jobs:
 
     - name: Load custom config
       run: |
+        cp sl3000.config openwrt/.config
         cd openwrt
-        cp ../sl3000.config .config
         make defconfig
 
     - name: Build firmware
