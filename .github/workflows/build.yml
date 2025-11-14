@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main   # 改成 main 分支，与你仓库默认分支一致
+      - main   # 使用 main 分支，与你仓库默认分支一致
   schedule:
     - cron: '0 3 * * *'   # 每天凌晨 3 点 (UTC) 自动构建
 
 jobs:
   build:
-    runs-on: ubuntu-latest   # 改成 ubuntu-latest，避免 runner 分配失败
+    runs-on: ubuntu-latest   # 使用 ubuntu-latest，避免 runner 分配失败
 
     steps:
     - name: Checkout source
@@ -21,7 +21,7 @@ jobs:
         sudo apt update
         sudo apt install -y build-essential git wget curl unzip \
           libncurses5-dev libncursesw5-dev zlib1g-dev gawk flex gettext \
-          libssl-dev python3 python3-dev python3-distutils python3-setuptools \
+          libssl-dev python3 python3-dev python3-setuptools python3-full \
           golang rsync xsltproc file ccache
 
     - name: Cache build dependencies
